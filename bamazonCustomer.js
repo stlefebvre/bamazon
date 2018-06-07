@@ -61,14 +61,17 @@ function chooseQty(qty) {
         message: "How much of this item do you need?",
         filter: Number
     }]).then(function (input) {
+        console.log("Got it!");
         var item = qty;
         var quantity = input.quantity;
         var queryStr = "select * FROM products WHERE ?";
 
         connection.query(queryStr, {
-            item_id: item,
+            item_id: item
+        },
             function (err, data) {
                 if (err) throw err;
+
                 var productData = data[0];
                 if (quantity <= productData.stock_quantity) {
                     console.log("Great! Your order has been placed!");
@@ -82,6 +85,6 @@ function chooseQty(qty) {
                     console.log("Sorry, there is not enough of this item in stock. Please choose a smaller quantity.")
                 }
             }
-        })
+        )
     })
 }
